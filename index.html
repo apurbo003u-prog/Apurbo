@@ -1,0 +1,182 @@
+<DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Babygirl</title>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  background: #ffe6f2;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+.tab { display: none; padding: 20px; }
+.active { display: block; }
+
+.button {
+  margin: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+  border: none;
+  background: #fff;
+}
+.button:hover { background: #ffccf2; }
+
+.poster-img {
+  width: 500px;
+  display: block;
+  margin: 50px auto 20px;
+}
+
+.cake-img { 
+  width: 500px;
+  cursor: pointer; 
+  margin-top: 20px; 
+  transition: transform 0.3s;
+}
+.cake-img:hover { transform: scale(1.05); }
+
+.confetti { position: fixed; font-size: 40px; animation: fall 25s linear forwards; }
+@keyframes fall { 0% {top: -10px;} 100% {top: 100%; transform: translateX(calc(var(--dx) * 1px));} }
+
+.flower { position: fixed; font-size: 40px; top: -50px; animation: drop 25s forwards; }
+@keyframes drop { 0% {top: -50px;} 100% {top: calc(100% - 50px);} }
+
+.sad { font-size: 50px; color: blue; }
+</style>
+</head>
+<body>
+
+<!-- Background music -->
+<audio id="birthdaySong" src="terepyarmain.mp3.mp3" loop></audio>
+
+<!-- Question 1 -->
+<div id="q1" class="tab active">
+  <h2>Hello my girlfriend, Happy Birthday 💖</h2>
+  <button class="button" onclick="nextQ2()">Thankyou babyboyfriend</button>
+</div>
+
+<!-- Question 2 -->
+<div id="q2" class="tab">
+  <h2>Do you want to see what I did? 🎁</h2>
+  <button class="button" onclick="startCelebration()">Yes</button>
+  <button class="button" onclick="showSad()">No</button>
+  <div id="sadMsg" class="sad" style="display:none;">😭😭😭 The tab is now sad...</div>
+</div>
+
+<!-- Celebration Poster with curved text -->
+<div id="celebration" class="tab">
+  <div class="poster" id="poster" style="margin-top:50px; font-size:40px; line-height:1.2;">
+    <span style="display:inline-block; transform:rotate(-15deg)">🎉</span>
+    <span style="display:inline-block; transform:rotate(-10deg)">H</span>
+    <span style="display:inline-block; transform:rotate(-5deg)">a</span>
+    <span style="display:inline-block; transform:rotate(-2deg)">p</span>
+    <span style="display:inline-block; transform:rotate(0deg)">p</span>
+    <span style="display:inline-block; transform:rotate(2deg)">y</span>
+    <span style="display:inline-block; transform:rotate(5deg)"> </span>
+    <span style="display:inline-block; transform:rotate(7deg)">B</span>
+    <span style="display:inline-block; transform:rotate(8deg)">i</span>
+    <span style="display:inline-block; transform:rotate(9deg)">r</span>
+    <span style="display:inline-block; transform:rotate(10deg)">t</span>
+    <span style="display:inline-block; transform:rotate(11deg)">h</span>
+    <span style="display:inline-block; transform:rotate(12deg)">d</span>
+    <span style="display:inline-block; transform:rotate(14deg)">a</span>
+    <span style="display:inline-block; transform:rotate(16deg)">y</span>
+    <span style="display:inline-block; transform:rotate(20deg)"> </span>
+    <span style="display:inline-block; transform:rotate(22deg)">B</span>
+    <span style="display:inline-block; transform:rotate(24deg)">a</span>
+    <span style="display:inline-block; transform:rotate(26deg)">b</span>
+    <span style="display:inline-block; transform:rotate(28deg)">y</span>
+    <span style="display:inline-block; transform:rotate(30deg)">g</span>
+    <span style="display:inline-block; transform:rotate(32deg)">i</span>
+    <span style="display:inline-block; transform:rotate(34deg)">r</span>
+    <span style="display:inline-block; transform:rotate(36deg)">l</span>
+    <span style="display:inline-block; transform:rotate(38deg)">!</span>
+    <span style="display:inline-block; transform:rotate(40deg)">🎉</span>
+  </div>
+
+  <!-- Next button -->
+  <button class="button" id="nextCakeBtn" style="display:none; margin-top:50px;" onclick="showCake()">Next</button>
+</div>
+
+<!-- Cake Tab -->
+<div id="cakeDiv" class="tab">
+  <h2>Touch the cake 🎂</h2>
+  <img src="birthdaycake.jpg.jpg" alt="Birthday Cake" class="cake-img" onclick="explodeParty()">
+</div>
+
+<!-- Final Message -->
+<div id="finalDiv" class="tab">
+  <h1>🎊 Happy Birthday Babygirl! 🎊</h1>
+  <p>Wishing you endless happiness and love 💖JOYA. You are the best, amar only me &lt;3 Your babyboy Loves you a lot. Thanks alot for coming into my life and wish that will together always. Tumi shottie onek beshi bhalo go. Amar cutuuuu Babygirl. From your Babyboyfriend 💕 Apurbo</p>
+</div>
+
+<script>
+// Show one tab at a time
+function showTab(id){
+  document.querySelectorAll('.tab').forEach(t=>t.style.display='none');
+  document.getElementById(id).style.display='block';
+}
+
+// First button click: play music from 0.46s
+function nextQ2(){ 
+  const song = document.getElementById('birthdaySong');
+  song.currentTime = 0.46; // start at 0.46s
+  song.loop = true;         // loop continuously
+  song.play().catch(e => console.log("Music autoplay unblocked"));
+
+  showTab('q2'); 
+}
+
+// Navigation
+function startCelebration(){
+  showTab('celebration');
+  setTimeout(()=>{ 
+    document.getElementById('nextCakeBtn').style.display='inline-block'; 
+  }, 1000);
+}
+
+function showSad(){ document.getElementById('sadMsg').style.display='block'; }
+function showCake(){ showTab('cakeDiv'); }
+
+// Cake click: confetti + flowers
+function explodeParty(){
+  for(let i=0;i<10;i++){
+    const f=document.createElement('div');
+    f.className='flower';
+    f.style.left=Math.random()*100+'%';
+    f.style.fontSize=50+Math.random()*40+'px';
+    f.textContent='🌸';
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),3000);
+  }
+
+  for(let i=0;i<30;i++){
+    const c=document.createElement('div');
+    c.className='confetti';
+    c.style.left=Math.random()*100+'%';
+    c.style.setProperty('--dx',(Math.random()-0.5)*200);
+    c.textContent='🎉';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
+
+  setTimeout(()=>{ showTab('finalDiv'); }, 2500);
+}
+
+// Restart music from 0.46s if user switches tab and comes back
+document.addEventListener("visibilitychange", function() {
+    const song = document.getElementById('birthdaySong');
+    if (!document.hidden) { // Tab active again
+        song.currentTime = 0.46;
+        song.play().catch(e => console.log("Music autoplay blocked"));
+    }
+});
+</script>
+
+</body>
+</html>
